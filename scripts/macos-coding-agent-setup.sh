@@ -107,12 +107,26 @@ if ! command -v pi >/dev/null 2>&1; then
 fi
 command -v pi >/dev/null 2>&1 || { echo "Pi is still missing from PATH." >&2; exit 1; }
 
+# Pi reconciles all configured packages on each install, so skip Puppeteer's
+# automatic browser downloads for both commands.
+export PUPPETEER_SKIP_DOWNLOAD=1
 pi install npm:pi-web-search@1.7.0
 pi install npm:pi-web-fetch@1.1.0
 
-# npm may skip Puppeteer's postinstall script, leaving web_fetch without Chrome.
+# web_fetch uses Chrome; install that browser without Puppeteer's unused headless shell.
 agent_dir="${PI_CODING_AGENT_DIR:-$HOME/.pi/agent}"
 "$agent_dir/npm/node_modules/.bin/puppeteer" browsers install chrome
+node -e '
+  const puppeteer = require(process.argv[1]);
+  (async () => {
+    const browser = await puppeteer.launch({ headless: true });
+    await browser.close();
+    console.log("Chrome launch check: ready");
+  })().catch(error => {
+    console.error(`Chrome launch check failed at ${puppeteer.executablePath()}: ${error.message}`);
+    process.exit(1);
+  });
+' "$agent_dir/npm/node_modules/puppeteer"
 
 if ! gui_installed; then
   brew tap minghinmatthewlam/tap

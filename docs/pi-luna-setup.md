@@ -19,7 +19,7 @@ The macOS coding-agent installer currently sets up the Pi CLI, the two web exten
    bash scripts/macos-coding-agent-setup.sh
    ```
 
-   Re-running the script is safe. It preserves other keys in `~/.pi/agent/settings.json`, including other model settings and packages. Pi and extension versions are pinned for a fresh install; an existing Pi binary is left in place and its version is printed. The script also installs the Chromium build needed by `web_fetch` when npm skips Puppeteer's install script.
+   Re-running the script is safe. It preserves other keys in `~/.pi/agent/settings.json`, including other model settings and packages. Pi and extension versions are pinned for a fresh install; an existing Pi binary is left in place and its version is printed. The script installs the Chrome build needed by `web_fetch` without Puppeteer's unused headless shell.
 
 4. Open `pi` or pi-gui. Sign in to **GitHub Copilot** with your organization account using the interactive account sign-in. In the Pi CLI, `/login` first shows an authentication-method menu; choose **Sign in with an account**, then GitHub Copilot. No token needs to be pasted into this repository.
 5. Verify the account and model in a terminal:
@@ -37,6 +37,6 @@ The macOS coding-agent installer currently sets up the Pi CLI, the two web exten
      "Use web_search to find the official Python pathlib documentation, then use web_fetch to read it. Report its title and URL."
    ```
 
-If `web_fetch` still fails to launch a browser, record the error before changing the team script.
+The installer verifies that Puppeteer's Chrome can launch. If it reports an incomplete browser cache, move only the reported Chrome build directory aside and rerun the installer. Avoid Homebrew `--zap` or clearing all Puppeteer caches for this test.
 
 The default-setting step can also be run alone with `node scripts/set_pi_luna_defaults.mjs`. It respects `PI_CODING_AGENT_DIR` if a custom Pi agent directory is configured. Pi's [settings reference](https://pi.dev/docs/latest/settings) documents the default keys; [pi-gui](https://www.pi-gui.com/) confirms it uses Pi's settings. The [evaluation report](https://github.com/kmerrittNBC/agent-evals/blob/main/docs/executive-report-2026-10-15.md) describes the tested medium-reasoning setup.
