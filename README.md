@@ -1,6 +1,6 @@
 # Coding agent setup
 
-Small macOS setup for the team's current coding agent: Pi with GPT-6 Luna through GitHub Copilot, plus pi-gui and the web search and fetch extensions. The installer sets Luna with high thinking as the default for new CLI sessions and GUI threads. GitHub Copilot sign-in remains interactive.
+Small macOS setup for the team's current coding agent: Pi with GPT-6 Luna through GitHub Copilot, plus pi-gui and the web search and fetch extensions. The installer sets Luna with high thinking as the default for new CLI sessions and GUI threads, and configures web search to use the Copilot model on a fresh install. GitHub Copilot sign-in remains interactive.
 
 Here's pi-gui running a coding task with GitHub Copilot's GPT-6 Luna at high thinking:
 

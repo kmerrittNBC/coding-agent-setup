@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Set the shared Pi CLI/pi-gui defaults without replacing other Pi settings.
+// Set the shared Pi CLI/pi-gui defaults and configure web search on a fresh install.
 import { existsSync, lstatSync, mkdirSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
@@ -41,3 +41,15 @@ if (JSON.stringify(settings) !== before || !exists) {
   renameSync(temporaryPath, settingsPath);
 }
 console.log(`Pi defaults: github-copilot/gpt-6-luna, high (${settingsPath})`);
+
+const searchPath = join(agentDir, "web-search.json");
+try {
+  writeFileSync(searchPath, `${JSON.stringify({
+    provider: "github-copilot",
+    model: "gpt-6-luna",
+  }, null, 2)}\n`, { flag: "wx", mode: 0o600 });
+  console.log(`Pi web search: github-copilot/gpt-6-luna (${searchPath})`);
+} catch (error) {
+  if (error.code !== "EEXIST") throw error;
+  console.log(`Pi web search: kept existing configuration (${searchPath})`);
+}

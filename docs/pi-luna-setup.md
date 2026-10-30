@@ -1,6 +1,6 @@
 # Pi + GPT-6 Luna setup (macOS)
 
-The macOS coding-agent installer currently sets up the Pi CLI, the two web extensions used in the evaluation, and pi-gui through Homebrew. It sets the **shared default for new CLI sessions and GUI threads** to `github-copilot/gpt-6-luna` with `high` thinking. Existing threads keep their own model settings. The evaluation used `medium`, so `high` is a team preference that still needs a separate smoke test.
+The macOS coding-agent installer currently sets up the Pi CLI, the two web extensions used in the evaluation, and pi-gui through Homebrew. It sets the **shared default for new CLI sessions and GUI threads** to `github-copilot/gpt-6-luna` with `high` thinking. On a fresh install, it also sets `web_search` to use that Copilot model. Existing threads keep their own model settings. The evaluation used `medium`, so `high` is a team preference that still needs a separate smoke test.
 
 ## Install
 
@@ -19,7 +19,7 @@ The macOS coding-agent installer currently sets up the Pi CLI, the two web exten
    bash scripts/macos-coding-agent-setup.sh
    ```
 
-   Re-running the script is safe. It preserves other keys in `~/.pi/agent/settings.json`, including other model settings and packages. Pi and extension versions are pinned for a fresh install; an existing Pi binary is left in place and its version is printed. The script installs the Chrome build needed by `web_fetch` without Puppeteer's unused headless shell.
+   Re-running the script is safe. It preserves other keys in `~/.pi/agent/settings.json`, including other model settings and packages. It creates `~/.pi/agent/web-search.json` with the Copilot Luna model if that file is missing, and keeps any existing search configuration. Pi and extension versions are pinned for a fresh install; an existing Pi binary is left in place and its version is printed. The script installs the Chrome build needed by `web_fetch` without Puppeteer's unused headless shell.
 
 ## Sign in to GitHub Copilot through the Pi CLI
 
@@ -68,4 +68,4 @@ No token needs to be pasted into this repository. When sign-in is complete, pres
 
 The installer verifies that Puppeteer's Chrome can launch. If it reports an incomplete browser cache, move only the reported Chrome build directory aside and rerun the installer. Avoid Homebrew `--zap` or clearing all Puppeteer caches for this test.
 
-The default-setting step can also be run alone with `node scripts/set_pi_luna_defaults.mjs`. It respects `PI_CODING_AGENT_DIR` if a custom Pi agent directory is configured. Pi's [settings reference](https://pi.dev/docs/latest/settings) documents the default keys; [pi-gui](https://www.pi-gui.com/) confirms it uses Pi's settings. The [evaluation report](https://github.com/kmerrittNBC/agent-evals/blob/main/docs/executive-report-2026-10-15.md) describes the tested medium-reasoning setup.
+The default-setting step can also be run alone with `node scripts/set_pi_luna_defaults.mjs`. It sets the Pi defaults and creates `web-search.json` when missing. It respects `PI_CODING_AGENT_DIR` if a custom Pi agent directory is configured. Pi's [settings reference](https://pi.dev/docs/latest/settings) documents the default keys; [pi-gui](https://www.pi-gui.com/) confirms it uses Pi's settings. The [evaluation report](https://github.com/kmerrittNBC/agent-evals/blob/main/docs/executive-report-2026-10-15.md) describes the tested medium-reasoning setup.
