@@ -21,15 +21,44 @@ The macOS coding-agent installer currently sets up the Pi CLI, the two web exten
 
    Re-running the script is safe. It preserves other keys in `~/.pi/agent/settings.json`, including other model settings and packages. Pi and extension versions are pinned for a fresh install; an existing Pi binary is left in place and its version is printed. The script installs the Chrome build needed by `web_fetch` without Puppeteer's unused headless shell.
 
-4. Open `pi` or pi-gui. Sign in to **GitHub Copilot** with your organization account using the interactive account sign-in. In the Pi CLI, `/login` first shows an authentication-method menu; choose **Sign in with an account**, then GitHub Copilot. No token needs to be pasted into this repository.
-5. Verify the account and model in a terminal:
+## Sign in to GitHub Copilot through the Pi CLI
+
+Use Pi in a terminal for sign-in. This has been more reliable in our setup tests than signing in through pi-gui. The screenshots show an existing Pi session, so its project name, skills, and model in the footer may differ from yours.
+
+1. Open a terminal app such as **Terminal**, **iTerm2**, **Ghostty**, or **Kitty**. Type `pi` and press **Return**. After Pi opens, type `/login` and press **Return**.
+
+   ![Pi terminal with the /login command entered](images/pi-enter-login-command.png)
+
+2. Select **Sign in with an account** and press **Return**.
+
+   ![Pi authentication method menu with Sign in with an account selected](images/pi-select-account-sign-in.png)
+
+3. Select **GitHub Copilot** and press **Return**.
+
+   ![Pi provider menu with GitHub Copilot selected](images/pi-select-github-copilot.png)
+
+4. At the **GitHub Enterprise URL/domain** prompt, leave the field blank and press **Return** if your organization signs in at `github.com`. Enter a custom domain only if your organization gave you one.
+
+   ![Pi GitHub Enterprise domain prompt left blank for github.com](images/pi-github-domain-prompt.png)
+
+5. **Command-click** the `https://github.com/login/device` link shown in Pi to open it in your browser. If your terminal does not open links that way, copy the link into your browser. Sign in to your **organization GitHub account**, then enter the one-time code displayed in your own Pi window on the GitHub page. The code is unique to your sign-in and is not shown in this screenshot. Complete GitHub's authorization prompts, then return to Pi and wait for confirmation.
+
+   ![Pi showing the GitHub device sign-in link](images/pi-github-device-link.png)
+
+No token needs to be pasted into this repository. When sign-in is complete, press **Ctrl+D** to exit Pi and return to your terminal prompt.
+
+## Open pi-gui and verify
+
+1. Open **pi-gui** from **Applications**, or press **Command+Space**, type `pi-gui`, and press **Return**. You can also run `open -a pi-gui` from a terminal prompt. If pi-gui was already open during sign-in, quit and reopen it. Pi and pi-gui share the same account and settings, so no separate GUI sign-in is needed.
+2. Create a **new thread** in pi-gui. Confirm that its model is `github-copilot/gpt-6-luna` and its thinking level is `high`. Existing threads retain their previous selections.
+3. In a terminal prompt, verify the Copilot connection and model:
 
    ```sh
    pi auth check --provider github-copilot --model gpt-6-luna
    pi --list-models gpt-6-luna
    ```
 
-6. Restart pi-gui if it was already open. Start a **new** CLI session or GUI thread and confirm the model is `github-copilot/gpt-6-luna` and thinking is `high`. Test both web tools:
+4. Test both web tools in a terminal prompt:
 
    ```sh
    pi --print --provider github-copilot --model gpt-6-luna --thinking high \
