@@ -2,6 +2,10 @@
 
 Small macOS setup for the team's current coding agent: Pi with GPT-6 Luna through GitHub Copilot, plus pi-gui and the web search and fetch extensions. The installer sets Luna with high thinking as the default for new CLI sessions and GUI threads. GitHub Copilot sign-in remains interactive.
 
+Here's pi-gui running a coding task with GitHub Copilot's GPT-6 Luna at high thinking:
+
+![Pi-gui showing a coding task in progress with GPT-6 Luna selected at high thinking](docs/images/pi-gui-preview.png)
+
 ## Quick start
 
 On an Apple Silicon Mac, install [Homebrew](https://brew.sh/) if needed, then:
